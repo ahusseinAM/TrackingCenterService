@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<configuration>
+  <configSections>
+		<sectionGroup name="common">
+			<section name="logging" type="Common.Logging.ConfigurationSectionHandler, Common.Logging" />
+		</sectionGroup>
+	</configSections>
+	<!--<common>
+		<logging>
+			<factoryAdapter type="Common.Logging.NLog.NLogLoggerFactoryAdapter, Common.Logging.NLog20">
+				<arg key="configType" value="FILE" />
+				<arg key="configFile" value="~\Bin\_NLog.config" />
+			</factoryAdapter>
+		</logging>
+	</common>-->
+  <system.serviceModel>
+    <behaviors>
+      <serviceBehaviors>
+        <behavior name="GSS.ServiceBehavior">
+          <serviceMetadata httpGetEnabled="True" />
+          <serviceDebug includeExceptionDetailInFaults="true" />
+          <dataContractSerializer maxItemsInObjectGraph="2147483647" />
+          <serviceThrottling maxConcurrentSessions="2147483647" maxConcurrentCalls="2147483647" maxConcurrentInstances="2147483647" />
+        </behavior>
+      </serviceBehaviors>
+    </behaviors>
+    <bindings>
+      <basicHttpBinding>
+        <binding name="GSS.ServiceBinding" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647" sendTimeout="12:00:00" receiveTimeout="12:00:00" maxBufferPoolSize="2147483647">
+          <readerQuotas maxDepth="2147483647" maxStringContentLength="2147483647" maxArrayLength="2147483647" maxBytesPerRead="2147483647" maxNameTableCharCount="2147483647" />
+          <security mode="None">
+          </security>
+        </binding>
+        <binding name="DSServiceBinding" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647" sendTimeout="12:00:00" receiveTimeout="12:00:00" messageEncoding="Mtom">
+          <security mode="None">
+          </security>
+          <readerQuotas maxDepth="2147483647" maxStringContentLength="2147483647" maxArrayLength="2147483647" maxBytesPerRead="2147483647" maxNameTableCharCount="2147483647" />
+        </binding>
+      </basicHttpBinding>
+      <netTcpBinding>
+        <binding name="DocumentStore.ServiceBinding" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647" maxBufferPoolSize="2147483647" openTimeout="00:01:00" closeTimeout="00:05:00" sendTimeout="12:00:00" receiveTimeout="12:00:00" portSharingEnabled="false" transferMode="Streamed">
+          <security mode="None" />
+          <readerQuotas maxDepth="2147483647" maxStringContentLength="2147483647" maxArrayLength="2147483647" maxBytesPerRead="2147483647" maxNameTableCharCount="2147483647" />
+        </binding>
+      </netTcpBinding>
+    </bindings>
+    <services>
+      <service name="GSS.TrackingCenterService.GSSTrackingCenterService" behaviorConfiguration="GSS.ServiceBehavior">
+        <endpoint address="" binding="basicHttpBinding" bindingName="GSS.ServiceBinding" bindingConfiguration="GSS.ServiceBinding" contract="GSS.Interfaces.ITrackingCenter" />
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+        <host>
+          <baseAddresses>
+            <add baseAddress="http://localhost:8097/TrackingCenterService/TrackingCenterService.svc" />
+          </baseAddresses>
+        </host>
+      </service>
+      <service name="GSS.TrackingCenterService.GSSTrackingCenterService1" behaviorConfiguration="GSS.ServiceBehavior">
+		<endpoint address="" binding="basicHttpBinding" bindingName="GSS.ServiceBinding" bindingConfiguration="GSS.ServiceBinding" contract="GSS.Interfaces.ITrackingCenter1" />
+		<endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+		<host>
+			<baseAddresses>
+				<add baseAddress="http://localhost:8097/TrackingCenterService/TrackingCenterService1.svc" />
+			</baseAddresses>
+		</host>
+	</service>
+      <service name="GSS.TrackingCenterService.GSSTrackingCenterService2" behaviorConfiguration="GSS.ServiceBehavior">
+        <endpoint address="" binding="basicHttpBinding" bindingName="GSS.ServiceBinding" bindingConfiguration="GSS.ServiceBinding" contract="GSS.Interfaces.ITrackingCenter2" />
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+        <host>
+          <baseAddresses>
+            <add baseAddress="http://localhost:8097/TrackingCenterService/TrackingCenterService2.svc" />
+          </baseAddresses>
+        </host>
+      </service>
+    </services>
+    <client>
+      <endpoint name="PROXY.DSCONNECTService" address="http://localhost:8099/DSConnectService/DSConnectService.svc" binding="basicHttpBinding" bindingConfiguration="DSServiceBinding" contract="DSConnectServiceInterface.IDSConnectService" />
+      <endpoint name="PROXY.DocumentStoreService" address="net.tcp://prd-docstore.corp.local:57060/Ewm/DocumentStoreService.svc" binding="netTcpBinding" bindingConfiguration="DocumentStore.ServiceBinding" contract="Ewm.DocumentStore.Common.IDocumentStoreService" />
+    </client>
+  </system.serviceModel>
+  <system.web>
+    <compilation debug="true" />
+    <httpRuntime maxRequestLength="524288" />
+  </system.web>
+  <appSettings>
+    <add key="ActiveDirectoryMethod" value="genworth" />
+    <add key="TiffFileExtns" value="BMP,PNG,JPG,JPEG,TIF,TIFF" />
+  </appSettings>
+  <connectionStrings>
+    <add name="TRACKING_CENTER" connectionString="Initial Catalog=Trackingcenter;Integrated Security=true;Data Source=fpkp01bpmpsdb1.corp.local" />
+  </connectionStrings>
+  <runtime>
+		<assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+			<dependentAssembly>
+				<assemblyIdentity name="NLog" publicKeyToken="5120e14c03d0593c" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-2.1.0.0" newVersion="2.1.0.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="Common.Logging" publicKeyToken="af08829b84f0328e" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-2.1.2.0" newVersion="2.1.2.0" />
+			</dependentAssembly>
+		</assemblyBinding>
+	</runtime>
+</configuration>

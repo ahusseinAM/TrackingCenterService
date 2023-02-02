@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Database Name="TrackingCenter" xmlns="http://schemas.microsoft.com/linqtosql/mapping/2007">
+
+	<Table Name="tbl_Item" Member="mem_Item">
+		<Type Name="GSS.Entities.DB.Item">
+			<Column Name="ItemID" Member="Id" />
+			<Column Name="ExternalID" Member="ExternalId" DbType="NCHAR(10)" />
+			<Column Name="BDID" Member="BDID" DbType="NVARCHAR(6)" />
+			<Column Name="AdvisorID" Member="AdvisorID" DbType="NVARCHAR(6)" />
+			<Column Name="AgentID" Member="AgentID" DbType="NVARCHAR(6)" />
+			<Column Name="ClientID" Member="ClientID" DbType="NVARCHAR(6)" />
+			<Column Name="Description" Member="Description" />
+			<Column Name="Status" Member="Status" DbType="NVARCHAR(80)" />
+			<Column Name="InternalStatus" Member="InternalStatus" DbType="NVARCHAR(80)" />
+			<Column Name="CreatedBy" Member="CreatedBy" />
+			<Column Name="CreatedDate" Member="CreatedDate" />
+			<Column Name="CloseDate" Member="ClosedDate" />
+			<Column Name="ModifiedDate" Member="ModifiedDate" />
+			<Column Name="AdvisorVisible" Member="AdvisorVisible" DbType="BIT" />
+			<Column Name="ResponseAllowed" Member="ResponseAllowed" />
+			<Column Name="ResponseRequired" Member="ResponseRequired" />
+			<Column Name="ObjectName" Member="ObjectName" />
+			<Column Name="DocuSignID" Member="DocuSignID" />
+			<Column Name="Description" Member="WorkItemType" />
+			<Column Name="eSigType" Member="eSigType" />
+			<Column Name="UploadAllowed" Member="UploadAllowed" />
+			<Column Name="KitName" Member="KitName" />
+			<Column Name="BundleID" Member="BundleID" />
+			<Column Name="EsigStatus" Member="EsigStatus" />
+			<Column Name="EnvelopeType" Member="EnvelopeType" />
+			<Column Name="OldExternalID" Member="OldExternalID" DbType="NCHAR(10)" />
+			<Column Name="ShortExternalDescription" Member="ShortExternalDescription" />
+			<Column Name="IsParent" Member="IsParent" DbType="BIT"  />
+			<Column Name="ParentItemID" Member="ParentItemID" DbType="INT"  />
+			<Column Name="RankOrder" Member="RankOrder" />
+			<Column Name="AccountID" Member="AccountID" DbType="NVARCHAR(6)" />
+			<Column Name="CustodialAccountNumber" Member="CustodialAccountNumber" DbType="NVARCHAR(25)" />
+			<Column Name="FundingAccountNumber" Member="FundingAccountNumber" DbType="NVARCHAR(25)" />
+			<Column Name="Custodian" Member="Custodian" DbType="NVARCHAR(6)" />
+			<Column Name="ParentExternalID" Member="ParentExternalID" DbType="NCHAR(10)" />
+			<Column Name="ItemAssociationID" Member="ItemAssociationID" />
+			<Column Name="ItemStatusEV" Member="ItemAssociationStatus" />
+			<Column Name="IsActive" Member="ItemAssociationActive" DbType="BIT" />
+			<Column Name="ItemName" Member="ItemName" />
+			<Column Name="IsEsignatureRequested" Member="IsEsignatureRequested" />
+			<Column Name="SsoGuidId" Member="SsoGuidId" />
+			<Column Name="SubmitToBD" Member="SubmitToBD" />
+			<Column Name="ItemType" Member="ItemType" DbType="CHAR(1)" />
+		</Type>
+	</Table>
+	<Function Name="dbo.getItemDetail" Method="GetWorkItemDetails" IsComposable="true">
+		<Parameter Name="externalID" Parameter="@externalID" DbType="NCHAR(10)" />
+		<ElementType Name="GSS.Entities.DB.Item" />
+	</Function>
+	<Function Name="dbo.getItems" Method="GetWorkitemList" IsComposable="true">
+		<ElementType Name="GSS.Entities.DB.Item" />
+	</Function>
+	<Function Name="dbo.GetBPMItemDetails" Method="GetBPMItemDetails" IsComposable="true">
+		<Parameter Name="externalID" Parameter="@ExternalID" DbType="NCHAR(10)" />
+		<ElementType Name="GSS.Entities.DB.Item" />
+	</Function>
+	<Function Name="dbo.getRelatedItems" Method="GetRelatedItems" IsComposable="false">
+		<Parameter Name="externalID" Parameter="@ExternalID" Direction="In" DbType="NCHAR(10)" />
+		<ElementType Name="GSS.Entities.DB.Item" />
+	</Function>
+
+	<Table Name="tbl_WorkItemType" Member="mem_WorkItemType">
+		<Type Name="GSS.Entities.WorkItemType1">
+			<Column Name="AgentID" Member="AgentID"  DbType="NVARCHAR(6)" />
+			<Column Name="ClientID" Member="ClientID" DbType="NVARCHAR(6)" />
+			<Column Name="CreatedDate" Member="CreatedDate" />
+			<Column Name="Status" Member="Status" DbType="NVARCHAR(80)" />
+			<Column Name="Description" Member="Title" />
+			<Column Name="Description" Member="ItemType" />
+			<Column Name="AdvisorVisible" Member="AdvisorVisible"  DbType="BIT" />
+			<Column Name="CloseDate" Member="CloseDate"/>
+			<Column Name ="ResponseRequired" Member="ResponseRequired"/>
+		</Type>
+	</Table>
+	<Function Name="dbo.getItems" Method="GetWorkItemTypes" IsComposable="true">
+		<ElementType Name="GSS.Entities.WorkItemType1" />
+	</Function>
+
+	<Table Name="tbl_WorkItemNote" Member="mem_WorkItemNote ">
+		<Type Name="GSS.Entities.WorkItemNote">
+			<Column Name="NoteID" Member="Id" DbType="INT" />
+			<Column Name="ItemID" Member="ItemID" />
+			<Column Name="ExternalID" Member="WorkItemExternalID" DbType="NCHAR(10)" />
+			<Column Name="NoteText" Member="NoteText" />
+			<Column Name="NoteFormat" Member="NoteFormat" />
+			<Column Name="DisplayMode" Member="DisplayMode" />
+			<Column Name="AdvisorVisible" Member="AdvisorVisible" />
+			<Column Name="CreatedBy" Member="CreatedBy" />
+			<Column Name="CreatedByName" Member="CreatedByName" />
+			<Column Name="CreatedByType" Member="CreatedByType" />
+			<Column Name="CreatedDate" Member="CreatedDate" />
+			<Column Name="InternalVisible" Member="InternalVisible" />
+			<Column Name="LastInternalVisibleModifiedBy" Member="LastInternalVisibleModifiedBy" />
+			<Column Name="LastInternalVisibleModifiedDate" Member="LastInternalVisibleModifiedDate" />
+		</Type>
+	</Table>
+	<Function Name="dbo.getItemNotes" Method="GetWorkItemNotes" IsComposable="true">
+		<ElementType Name="GSS.Entities.WorkItemNote" />
+	</Function>
+	<Function Name="dbo.getRelatedItemNotes" Method="GetRelatedItemNotes" IsComposable="false">
+		<Parameter Name="externalID" Parameter="@ExternalID" Direction="In" />
+		<ElementType Name="GSS.Entities.WorkItemNote" />
+	</Function>
+
+	<Table Name="tbl_ProcessAlert" Member="mem_ProcessAlert ">
+		<Type Name="GSS.Entities.ProcessAlert">
+			<Column Name="ExternalID" Member="ExternalID" DbType="NCHAR(10)" />
+			<Column Name="Message" Member="Message" />
+			<Column Name="Processed" Member="Processed" />
+			<Column Name="QueueId" Member="QueueId" />
+			<Column Name="Subject" Member="Subject" />
+			<Column Name="AlertTypeEV" Member="AlertType" />
+			<Column Name="DocumentID" Member="DocumentID" />
+			<Column Name="CreatedDate" Member="CreatedDate" />
+		</Type>
+	</Table>
+	<Function Name="dbo.getProcessAlertQueue" Method="GetProcessAlerts" IsComposable="true">
+		<ElementType Name="GSS.Entities.ProcessAlert" />
+	</Function>
+
+	<Table Name="tbl_DocumentStatus" Member="mem_DocumentStatus ">
+		<Type Name="GSS.Entities.DocumentStatus">
+			<Column Name="ExternalID" Member="ExternalId" DbType="NCHAR(10)" />
+			<Column Name="CloseTime" Member="CloseTime" />
+			<Column Name="PreviousAttemptDate" Member="PreviousAttemptDate" />
+			<Column Name="PreviousTransmissionDate" Member="PreviousTransmissionDate" />
+			<Column Name="InitialFTPDate" Member="InitialFTPDate" />
+		</Type>
+	</Table>
+	<Function Name="dbo.getDocumentStatus" Method="GetDocumentStatus" IsComposable="false">
+		<Parameter Name="externalID" Parameter="@ExternalID" Direction="In" DbType="NCHAR(10)" />
+		<Parameter Name="bundleID" Parameter="@BundleID" Direction="In" />
+		<ElementType Name="GSS.Entities.DocumentStatus" />
+	</Function>
+
+	<Table Name="tbl_ItemAssociation" Member="mem_ItemAssociation">
+		<Type Name="GSS.Entities.WorkItemAssociation">
+			<Column Name="ItemAssociationID" Member="ID" />
+			<Column Name="ItemID" Member="ItemID" />
+			<Column Name="ExternalID" Member="ExternalID" DbType="NCHAR(10)" />
+			<Column Name="AccountID" Member="AccountID" DbType="NVARCHAR(6)" />
+			<Column Name="PortfolioID" Member="PortfolioID" />
+			<Column Name="CustodialAccountNumber" Member="CustodialAccountNumber" DbType="NVARCHAR(25)" />
+			<Column Name="FundingAccountNumber" Member="FundingAccountNumber" DbType="NVARCHAR(25)" />
+			<Column Name="Custodian" Member="Custodian" DbType="NVARCHAR(6)" />
+			<Column Name="ItemName" Member="ItemName" />
+			<Column Name="ItemStatusEV" Member="ItemStatus" />
+			<Column Name="IsActive" Member="IsActive" />
+			<Column Name="CreatedDate" Member="CreatedDate" />
+			<Column Name="ModifiedDate" Member="ModifiedDate" />
+		</Type>
+	</Table>
+	<Function Name="dbo.getItemAssociations" Method="GetItemAssociations" IsComposable="true">
+		<ElementType Name="GSS.Entities.WorkItemAssociation" />
+	</Function>
+	<Function Name="dbo.getItemAssociationsByExternalId" Method="GetItemAssociationsByExternalId" IsComposable="true">
+		<Parameter Name="externalId" Parameter="@externalId" Direction="In" DbType="NCHAR(10)" />
+		<ElementType Name="GSS.Entities.WorkItemAssociation" />
+	</Function>
+	<Function Name="dbo.getRelatedItemAssociations" Method="GetRelatedItemAssociations" IsComposable="false">
+		<Parameter Name="externalID" Parameter="@externalID" Direction="In" DbType="NCHAR(10)" />
+		<ElementType Name="GSS.Entities.WorkItemAssociation" />
+	</Function>
+
+	<Function Name="dbo.CloseAgedOpenDNumber" Method="CloseAgedOpenDNumber" IsComposable="false">
+		<ElementType Name="GSS.Entities.ClosedAgedOpenWorkItemResponse">
+			<Column Name="IsSuccess" Member="IsSuccess" />
+			<Column Name="Subject" Member="Subject" />
+			<Column Name="Body" Member="Body" />
+		</ElementType>
+	</Function>
+
+	<Function Name="dbo.CloseAgedOpenNNumber" Method="CloseAgedOpenNNumber" IsComposable="false">
+		<ElementType Name="GSS.Entities.ClosedAgedOpenWorkItemResponse">
+			<Column Name="IsSuccess" Member="IsSuccess" />
+			<Column Name="Subject" Member="Subject" />
+			<Column Name="Body" Member="Body" />
+		</ElementType>
+	</Function>
+</Database>
